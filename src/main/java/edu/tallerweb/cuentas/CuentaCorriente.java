@@ -24,8 +24,10 @@ public class CuentaCorriente extends AbstractCuenta{
 	 * @param descubiertoTotal
 	 */
 	private Double descubierto;
+	Double saldoNegativo;
 	public CuentaCorriente(final Double descubiertoTotal) {
 		this.descubierto = descubiertoTotal; 
+		this.saldoNegativo = 0.0;
 	}
 	
 	/**
@@ -35,7 +37,12 @@ public class CuentaCorriente extends AbstractCuenta{
 	 * @param monto a depositar
 	 */
 	public void depositar(final Double monto) {
-		super.depositar(monto);
+		if ( this.saldoNegativo > 0){
+			if ( monto >= this.saldoNegativo ){
+				super.depositar( monto - this.saldoNegativo );
+				this.saldoNegativo = 0.0;
+			} else { this.saldoNegativo -= monto;}
+		}else super.depositar(monto);
 		}
 
 	/**
@@ -47,10 +54,10 @@ public class CuentaCorriente extends AbstractCuenta{
 	 */
 	public void extraer(final Double monto) {
 		if( monto > this.getSaldo() ) {
-			if ( monto - this.getSaldo() <= this.descubierto){
-				Double impuesto;
-				impuesto = ( monto - this.getSaldo() ) * 0.05 ;
-				super.saldo -= monto + impuesto;
+			Double montoConImpuesto = ( monto - this.getSaldo() ) * 1.05 ;
+			if ( montoConImpuesto <= this.descubierto - this.saldoNegativo ){
+				this.saldoNegativo +=  montoConImpuesto;
+				super.saldo = 0.0;
 				}
 			else throw new CuentaBancariaException("No cubre descubierto");
 		}

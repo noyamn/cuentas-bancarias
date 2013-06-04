@@ -15,7 +15,9 @@ public abstract class AbstractCuenta {
 	 */
 	protected Double saldo = 0.0;
 	public void depositar(final Double monto) {
-		this.saldo += monto;
+		if ( monto >= 0) {
+			this.saldo += monto; }
+		else { throw new CuentaBancariaException("El monto debe ser positivo"); }
 		}
 
 	/**
@@ -23,8 +25,11 @@ public abstract class AbstractCuenta {
 	 * @param monto a extraer
 	 */
 	public void extraer(final Double monto) {
-		if( this.saldo >= monto) {
-			this.saldo -= monto; }
-		else throw new CuentaBancariaException("No tiene saldo suficiente");
+		if ( monto > 0 ){
+			if( this.saldo >= monto) {
+				this.saldo -= monto; }
+			else throw new CuentaBancariaException("No tiene saldo suficiente");
 		}
+		else { throw new CuentaBancariaException("El monto debe ser positivo"); }
+	}
 }
