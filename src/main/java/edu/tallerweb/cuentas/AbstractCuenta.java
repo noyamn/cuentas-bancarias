@@ -13,12 +13,18 @@ public abstract class AbstractCuenta {
 	 * Agrega a la cuenta el monto determinado
 	 * @param monto a depositar
 	 */
-	public abstract void depositar(final Double monto);
+	protected Double saldo = 0.0;
+	public void depositar(final Double monto) {
+		this.saldo += monto;
+		}
 
 	/**
 	 * Retira de la cuenta el monto determinado
 	 * @param monto a extraer
 	 */
-	public abstract void extraer(final Double monto);
-
+	public void extraer(final Double monto) {
+		if( this.saldo >= monto) {
+			this.saldo -= monto; }
+		else throw new CuentaBancariaException("No tiene saldo suficiente");
+		}
 }

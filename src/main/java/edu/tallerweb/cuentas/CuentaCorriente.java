@@ -16,15 +16,16 @@ package edu.tallerweb.cuentas;
  * Pasaremos a deberle al banco $ 105 en total: los $ 100 que
  * nos cubrió, más el 5% adicional sobre el descubierto otorgado.
  */
-public class CuentaCorriente {
+public class CuentaCorriente extends AbstractCuenta{
 
 	/**
 	 * Toda cuenta corriente se inicia con un límite total
 	 * para el descubierto.
 	 * @param descubiertoTotal
 	 */
+	private Double descubierto;
 	public CuentaCorriente(final Double descubiertoTotal) {
-		throw new RuntimeException("No implementado aún");
+		this.descubierto = descubiertoTotal; 
 	}
 	
 	/**
@@ -34,8 +35,8 @@ public class CuentaCorriente {
 	 * @param monto a depositar
 	 */
 	public void depositar(final Double monto) {
-		throw new RuntimeException("No implementado aún");
-	}
+		super.depositar(monto);
+		}
 
 	/**
 	 * Se cobrará el 5% de comisión sobre el monto girado
@@ -45,15 +46,23 @@ public class CuentaCorriente {
 	 * @param monto a extraer
 	 */
 	public void extraer(final Double monto) {
-		throw new RuntimeException("No implementado aún");
-	}
+		if( monto > this.getSaldo() ) {
+			if ( monto - this.getSaldo() <= this.descubierto){
+				Double impuesto;
+				impuesto = ( monto - this.getSaldo() ) * 0.05 ;
+				super.saldo -= monto + impuesto;
+				}
+			else throw new CuentaBancariaException("No cubre descubierto");
+		}
+		else { super.extraer(monto); }
+		}
 
 	/**
 	 * Permite saber el saldo de la cuenta
 	 * @return el saldo de la cuenta
 	 */
 	public Double getSaldo() {
-		throw new RuntimeException("No implementado aún");
+		return super.saldo;
 	}
 	
 	/**
@@ -61,7 +70,7 @@ public class CuentaCorriente {
 	 * @return el descubierto de la cuenta
 	 */
 	public Double getDescubierto() {
-		throw new RuntimeException("No implementado aún");
+		return this.descubierto;
 	}
 
 }

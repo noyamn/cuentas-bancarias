@@ -5,14 +5,15 @@ package edu.tallerweb.cuentas;
  * quinta extracción de dinero se cobre un costo adicional
  * por extracción de $ 6
  */
-public class CajaAhorros {
+public class CajaAhorros extends AbstractCuenta{
 
 	/**
 	 * No hay reglas adicionales para el depósito
 	 * @param monto a depositar
 	 */
+	private Integer cantidadExtracciones = 0;
 	public void depositar(final Double monto) {
-		throw new RuntimeException("No implementado aún");
+		super.depositar(monto);
 	}
 
 	/**
@@ -21,7 +22,11 @@ public class CajaAhorros {
 	 * @param monto a extraer
 	 */
 	public void extraer(final Double monto) {
-		throw new RuntimeException("No implementado aún");
+		super.extraer(monto);
+		cantidadExtracciones ++;
+		if( cantidadExtracciones > 5){
+			super.extraer(6.0);			
+		}
 	}
 
 	/**
@@ -29,7 +34,6 @@ public class CajaAhorros {
 	 * @return el saldo de la cuenta
 	 */
 	public Double getSaldo() {
-		throw new RuntimeException("No implementado aún");
+		return super.saldo;
 	}
-
 }
