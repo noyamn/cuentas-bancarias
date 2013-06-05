@@ -90,7 +90,7 @@ public class CuentaTests {
 	
 		Assert.assertEquals(
 				"al extraer $ 150.0 de una cuenta con $ 100.0 debe 100 mas 5 de impuesto",
-				-105.0, cuenta.getSaldo(), 0.0);
+				0, cuenta.getSaldo(), 0.0);
 	}
 	
 	@Test(expected=CuentaBancariaException.class)

@@ -55,8 +55,9 @@ public class CuentaCorriente extends AbstractCuenta{
 	public void extraer(final Double monto) {
 		if( monto > this.getSaldo() ) {
 			Double montoConImpuesto = ( monto - this.getSaldo() ) * 1.05 ;
-			if ( montoConImpuesto <= this.descubierto - this.saldoNegativo ){
+			if ( montoConImpuesto <= this.descubierto ){
 				this.saldoNegativo +=  montoConImpuesto;
+				this.descubierto -= montoConImpuesto;
 				super.saldo = 0.0;
 				}
 			else throw new CuentaBancariaException("No cubre descubierto");
